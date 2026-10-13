@@ -2,6 +2,9 @@
 
 import { useState } from "react";
 
+// 시온유통 스마트스토어 공식 바로가기 링크 (로그인 없이 전체 상품 검색 및 제품 리스트 즉시 노출)
+const SION_SMARTSTORE_URL = "https://search.shopping.naver.com/search/all?query=%EC%8B%9C%EC%98%A8%EC%9C%A0%ED%86%B5";
+
 interface ProductCatalog {
   id: string;
   name: string;
@@ -107,7 +110,7 @@ const radarProducts: ProductCatalog[] = [
   }
 ];
 
-// 스마트스토어 인기 제품 리스트 (웹사이트 내 즉시 확인 가능)
+// 시온유통 스마트스토어 인기 제품 리스트 (웹사이트 내 즉시 확인 가능)
 const storeProductList: StoreItem[] = [
   {
     id: "item-1",
@@ -251,7 +254,7 @@ export default function Home() {
         {/* 1. 상단 네비게이션 헤더 */}
         <header className="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-xs transition-all">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            {/* 서광계기 로고 (시온유통 문구 제거) */}
+            {/* 서광계기 로고 */}
             <a href="#" className="flex items-center gap-3 group">
               <div className="w-11 h-11 rounded-xl bg-gradient-to-tr from-blue-700 via-blue-600 to-indigo-600 flex items-center justify-center text-white shadow-md shadow-blue-500/25 group-hover:scale-105 transition-transform duration-200">
                 <span className="font-extrabold text-base tracking-tighter">SK</span>
@@ -285,7 +288,7 @@ export default function Home() {
               </a>
               <a href="#store-products" className="hover:text-emerald-600 transition-colors py-1 flex items-center gap-1 text-emerald-700 font-semibold">
                 <span className="px-1 rounded bg-green-600 text-white text-[10px] font-black">N</span>
-                스마트스토어 제품
+                시온유통 스토어
               </a>
               <a href="#contact" className="hover:text-blue-600 transition-colors py-1">
                 견적 및 문의
@@ -295,11 +298,13 @@ export default function Home() {
             {/* 헤더 우측 버튼들 */}
             <div className="hidden md:flex items-center gap-2.5">
               <a
-                href="#store-products"
+                href={SION_SMARTSTORE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-bold bg-emerald-50 text-emerald-700 hover:bg-emerald-600 hover:text-white border border-emerald-200 transition-all shadow-2xs"
               >
                 <span className="w-3.5 h-3.5 rounded bg-emerald-600 text-white flex items-center justify-center text-[9px] font-black leading-none">N</span>
-                스마트스토어 제품보기
+                시온유통 스마트스토어 ↗
               </a>
               <a
                 href="#contact"
@@ -353,11 +358,13 @@ export default function Home() {
                 유튜브 & 블로그 미리보기
               </a>
               <a
-                href="#store-products"
+                href={SION_SMARTSTORE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="block px-3 py-2.5 rounded-lg text-sm font-semibold text-emerald-700 bg-emerald-50/70"
               >
-                스마트스토어 제품 리스트 보기
+                시온유통 스마트스토어 바로가기 ↗
               </a>
               <a
                 href="#contact"
@@ -378,7 +385,7 @@ export default function Home() {
           )}
         </header>
 
-        {/* 2. 히어로 배너 영역 (시온유통 문구 제거) */}
+        {/* 2. 히어로 배너 영역 */}
         <section className="relative overflow-hidden pt-12 pb-16 md:pt-16 md:pb-24">
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1100px] h-[500px] bg-gradient-to-b from-blue-100/70 via-indigo-50/40 to-transparent blur-3xl -z-10 pointer-events-none" />
           
@@ -386,7 +393,7 @@ export default function Home() {
             {/* 상단 뱃지 */}
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-semibold bg-blue-50 border border-blue-200 text-blue-700 mb-6 shadow-xs">
               <span className="flex h-2 w-2 rounded-full bg-blue-600 animate-ping" />
-              지멘스(SIEMENS) 공정 계측기기 · 네이버 스마트스토어
+              지멘스(SIEMENS) 공정 계측기기 · 시온유통 스마트스토어
             </div>
 
             {/* 메인 타이틀 */}
@@ -398,7 +405,7 @@ export default function Home() {
             {/* 설명 문구 */}
             <p className="text-base sm:text-lg text-slate-600 leading-relaxed max-w-2xl mx-auto mb-8 font-normal break-keep">
               (주)서광계기는 검증된 80GHz 스마트 레이더 레벨 트랜스미터와 정밀 현장 세팅 기술 지원,<br className="hidden sm:inline" />
-              그리고 로그인 없이 바로 확인 가능한 스마트스토어 제품 리스트를 제공합니다.
+              그리고 시온유통 스마트스토어의 전체 제품 리스트를 로그인 없이 바로 제공합니다.
             </p>
 
             {/* CTA 버튼들 */}
@@ -428,7 +435,7 @@ export default function Home() {
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm shadow-md shadow-emerald-600/25 transition-all"
               >
                 <span className="w-4 h-4 rounded bg-white text-emerald-600 flex items-center justify-center text-[10px] font-black">N</span>
-                <span>스마트스토어 제품 리스트 바로보기</span>
+                <span>시온유통 제품 리스트 바로보기</span>
               </a>
             </div>
 
@@ -444,7 +451,7 @@ export default function Home() {
               </div>
               <div className="bg-white/60 backdrop-blur-xs p-3 rounded-xl border border-slate-100">
                 <p className="text-2xl font-black text-emerald-600">N Pay</p>
-                <p className="text-xs text-slate-500 font-medium mt-0.5">스마트스토어 간편 결제</p>
+                <p className="text-xs text-slate-500 font-medium mt-0.5">시온유통 온라인 결제</p>
               </div>
               <div className="bg-white/60 backdrop-blur-xs p-3 rounded-xl border border-slate-100">
                 <p className="text-2xl font-black text-blue-600">Bluetooth</p>
@@ -457,7 +464,6 @@ export default function Home() {
         {/* 3. 지멘스 레이더 라인 LR 150 및 유사 제품 3종 카탈로그 섹션 */}
         <section id="products" className="py-16 md:py-24 bg-white/60 backdrop-blur-sm border-t border-slate-200/80">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            {/* 섹션 헤더 */}
             <div className="text-center max-w-3xl mx-auto mb-14">
               <span className="inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider text-blue-700 bg-blue-100/70 mb-3">
                 Siemens SITRANS Radar Product Catalog
@@ -470,14 +476,12 @@ export default function Home() {
               </p>
             </div>
 
-            {/* 제품 3개 카드 그리드 */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               {radarProducts.map((product) => (
                 <div
                   key={product.id}
                   className="group relative bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-2xl hover:border-blue-400 hover:-translate-y-1.5 transition-all duration-300 flex flex-col overflow-hidden"
                 >
-                  {/* 상단 뱃지 & 카테고리 */}
                   <div className="p-6 pb-2 flex items-center justify-between">
                     <span className="text-xs font-bold text-blue-600 tracking-wide">
                       {product.category}
@@ -487,7 +491,6 @@ export default function Home() {
                     </span>
                   </div>
 
-                  {/* 제품 이미지 영역 */}
                   <div className="relative px-6 py-4 flex items-center justify-center bg-gradient-to-b from-slate-50/50 to-white">
                     <div className="relative w-full aspect-4/3 max-w-[280px] overflow-hidden rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center group-hover:scale-102 transition-transform duration-300">
                       <img
@@ -499,7 +502,6 @@ export default function Home() {
                     </div>
                   </div>
 
-                  {/* 제품 텍스트 및 사양 */}
                   <div className="p-6 pt-2 flex-1 flex flex-col justify-between">
                     <div>
                       <h3 className="text-2xl font-black text-slate-900 tracking-tight group-hover:text-blue-600 transition-colors">
@@ -512,7 +514,6 @@ export default function Home() {
                         {product.desc}
                       </p>
 
-                      {/* 핵심 스펙 그리드 */}
                       <div className="bg-slate-50 rounded-xl p-3.5 mb-5 border border-slate-100 space-y-2 text-xs">
                         <div className="flex justify-between items-center">
                           <span className="text-slate-500">주파수</span>
@@ -537,7 +538,6 @@ export default function Home() {
                       </div>
                     </div>
 
-                    {/* 액션 버튼들 */}
                     <div className="pt-4 border-t border-slate-100 flex items-center gap-2">
                       <button
                         type="button"
@@ -558,7 +558,6 @@ export default function Home() {
               ))}
             </div>
 
-            {/* 카탈로그 다운로드 안내 배너 */}
             <div className="mt-12 bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 rounded-2xl p-6 sm:p-8 text-white flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center text-blue-300 shrink-0">
@@ -591,7 +590,6 @@ export default function Home() {
           <div className="absolute bottom-20 right-10 w-96 h-96 bg-emerald-600/15 rounded-full blur-3xl pointer-events-none" />
 
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            {/* 섹션 헤더 */}
             <div className="text-center max-w-3xl mx-auto mb-10">
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold bg-white/10 border border-white/20 text-blue-300 mb-3">
                 <span className="flex h-2 w-2 rounded-full bg-red-500 animate-pulse" />
@@ -605,7 +603,6 @@ export default function Home() {
               </p>
             </div>
 
-            {/* 채널 선택 탭 버튼들 */}
             <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-10 max-w-2xl mx-auto">
               {mediaChannels.map((channel) => {
                 const isActive = activeMediaTab === channel.key;
@@ -635,7 +632,6 @@ export default function Home() {
               })}
             </div>
 
-            {/* 선택된 탭 메인 대형 프리뷰 카드 */}
             <div className="max-w-4xl mx-auto bg-slate-900/90 backdrop-blur-md rounded-3xl border border-slate-800 p-4 sm:p-7 shadow-2xl mb-12">
               <a
                 href={activeMedia.url}
@@ -649,10 +645,8 @@ export default function Home() {
                   className="w-full h-full object-cover group-hover:scale-104 transition-transform duration-500"
                 />
 
-                {/* 어두운 그라데이션 오버레이 */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/30 group-hover:bg-black/10 transition-colors" />
 
-                {/* 중앙 아이콘 */}
                 <div className="absolute inset-0 flex items-center justify-center">
                   {activeMedia.key === "youtube" ? (
                     <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-red-600 group-hover:bg-red-500 text-white flex items-center justify-center shadow-2xl shadow-red-600/50 group-hover:scale-110 group-active:scale-95 transition-all duration-300">
@@ -669,7 +663,6 @@ export default function Home() {
                   )}
                 </div>
 
-                {/* 상단 뱃지 */}
                 <div className="absolute top-4 left-4 flex items-center gap-2">
                   <span className={`px-2.5 py-1 rounded-md text-xs font-bold ${activeMedia.badgeColor} shadow-md`}>
                     {activeMedia.badge}
@@ -679,7 +672,6 @@ export default function Home() {
                   </span>
                 </div>
 
-                {/* 하단 캡션 */}
                 <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between">
                   <div className="max-w-lg">
                     <p className="text-white font-bold text-sm sm:text-lg drop-shadow-md">
@@ -699,7 +691,6 @@ export default function Home() {
                 </div>
               </a>
 
-              {/* 하단 설명 & 버튼 */}
               <div className="mt-5 pt-5 border-t border-slate-800 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                 <div className="flex-1">
                   <h4 className="font-bold text-base text-white flex items-center gap-2">
@@ -731,7 +722,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* 3개 채널 미니 카드 그리드 */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
               {mediaChannels.map((channel) => (
                 <div
@@ -791,11 +781,11 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 5. [신규] 스마트스토어 전용 배너 & 바로 보는 제품 리스트 (로그인 없이 즉시 확인) */}
+        {/* 5. [시온유통 스마트스토어 전용 배너 & 바로 보는 제품 리스트] */}
         <section id="store-products" className="py-16 md:py-24 bg-slate-50 border-t border-slate-200">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             
-            {/* 상단 스마트스토어 배너 */}
+            {/* 상단 시온유통 스마트스토어 배너 */}
             <div className="bg-gradient-to-r from-emerald-800 via-teal-800 to-slate-900 rounded-3xl p-6 sm:p-10 text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-6 mb-16">
               <div className="flex items-center gap-4">
                 <div className="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center text-white shrink-0 shadow-inner">
@@ -803,26 +793,26 @@ export default function Home() {
                 </div>
                 <div>
                   <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-[11px] font-bold bg-emerald-500/20 border border-emerald-400/30 text-emerald-300 mb-1">
-                    네이버 스마트스토어 공식 배너
+                    시온유통 네이버 스마트스토어
                   </div>
                   <h3 className="text-xl sm:text-2xl font-black tracking-tight">
-                    스마트스토어 온라인 간편 주문
+                    시온유통 스마트스토어 온라인 간편 주문
                   </h3>
                   <p className="text-xs sm:text-sm text-emerald-100 mt-1">
-                    로그인 없이 아래 제품 리스트에서 규격과 가격을 바로 확인하시고, N Pay로 안전하게 구매하세요.
+                    로그인 번거로움 없이 아래 제품 리스트에서 가격과 규격을 바로 확인하시고 N Pay로 간편하게 구매하세요.
                   </p>
                 </div>
               </div>
 
               <div className="flex items-center gap-3 w-full md:w-auto">
                 <a
-                  href="https://smartstore.naver.com/skgk"
+                  href={SION_SMARTSTORE_URL}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full md:w-auto text-center px-6 py-3.5 rounded-xl bg-white text-emerald-900 font-extrabold text-xs sm:text-sm shadow-md hover:bg-emerald-50 transition-all flex items-center justify-center gap-2"
                 >
                   <span className="w-4 h-4 rounded bg-emerald-600 text-white flex items-center justify-center text-[10px] font-black">N</span>
-                  <span>스마트스토어 바로가기</span>
+                  <span>시온유통 스토어 바로가기 ↗</span>
                   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                   </svg>
@@ -833,17 +823,17 @@ export default function Home() {
             {/* 제품 리스트 헤더 */}
             <div className="text-center max-w-3xl mx-auto mb-12">
               <span className="inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider text-emerald-800 bg-emerald-100 mb-2">
-                Real-Time Product List
+                Zion Distribution Store Products
               </span>
               <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight break-keep">
-                스마트스토어 대표 제품 리스트
+                시온유통 스마트스토어 대표 제품 리스트
               </h2>
               <p className="text-slate-600 text-sm sm:text-base mt-2 break-keep">
-                로그인 번거로움 없이 아래 제품 목록에서 원하는 계측기 사양과 가격을 즉시 확인하실 수 있습니다.
+                로그인 없이 아래 제품 목록에서 원하는 계측기 사양과 가격을 즉시 확인하실 수 있습니다.
               </p>
             </div>
 
-            {/* 제품 리스트 그리드 (로그인 없이 바로 확인) */}
+            {/* 제품 리스트 그리드 */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {storeProductList.map((item) => (
                 <div
@@ -851,7 +841,6 @@ export default function Home() {
                   className="bg-white rounded-2xl border border-slate-200/90 shadow-xs hover:shadow-xl hover:border-emerald-400 hover:-translate-y-1 transition-all duration-200 flex flex-col justify-between overflow-hidden group"
                 >
                   <div className="p-6">
-                    {/* 상단 뱃지 & 카테고리 */}
                     <div className="flex items-center justify-between mb-3">
                       <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-100">
                         {item.category}
@@ -861,17 +850,14 @@ export default function Home() {
                       </span>
                     </div>
 
-                    {/* 제품명 */}
                     <h3 className="text-lg font-bold text-slate-900 group-hover:text-emerald-700 transition-colors leading-snug mb-2">
                       {item.name}
                     </h3>
 
-                    {/* 스펙 설명 */}
                     <p className="text-xs text-slate-600 leading-relaxed mb-4 min-h-[36px]">
                       {item.specs}
                     </p>
 
-                    {/* 가격 정보 */}
                     <div className="pt-3 border-t border-slate-100 flex items-baseline justify-between">
                       <span className="text-xs text-slate-400 font-medium">스토어가</span>
                       <div className="flex items-center gap-1.5">
@@ -881,7 +867,6 @@ export default function Home() {
                     </div>
                   </div>
 
-                  {/* 하단 액션 버튼 */}
                   <div className="px-6 pb-6 pt-1 flex items-center gap-2">
                     <a
                       href="tel:02-6396-4671"
@@ -890,12 +875,12 @@ export default function Home() {
                       재고/견적 문의
                     </a>
                     <a
-                      href="https://smartstore.naver.com/skgk"
+                      href={SION_SMARTSTORE_URL}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex-1 py-2.5 px-3 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs transition-colors text-center shadow-xs flex items-center justify-center gap-1"
                     >
-                      <span>스토어 구매</span>
+                      <span>시온유통 구매 ↗</span>
                       <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                       </svg>
@@ -910,7 +895,7 @@ export default function Home() {
               <div className="flex items-center gap-3">
                 <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0" />
                 <p>
-                  <strong className="text-slate-800">대량 주문 및 맞춤형 계측기 사양:</strong> 전자세금계산서 발행 및 현장 출장 점검은 대표전화(02-6396-4671)로 바로 신청 가능합니다.
+                  <strong className="text-slate-800">시온유통 대량 주문 및 맞춤형 계측기 사양:</strong> 전자세금계산서 발행 및 현장 출장 점검은 직통전화(02-6396-4671)로 바로 신청 가능합니다.
                 </p>
               </div>
               <a
@@ -940,7 +925,6 @@ export default function Home() {
                   세계적인 계측 장비의 공급과 현장 기술 지원을 30여 년간 담당해 온 신뢰의 계측기 전문 기업입니다.
                 </p>
 
-                {/* 연락처 카드 그리드 */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
                   <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-xs">
                     <p className="text-xs text-slate-500 font-semibold mb-1">대표 유선전화</p>
@@ -981,13 +965,13 @@ export default function Home() {
                   </button>
 
                   <a
-                    href="https://smartstore.naver.com/skgk"
+                    href={SION_SMARTSTORE_URL}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-emerald-600 text-white font-bold text-xs hover:bg-emerald-700 transition-colors shadow-sm"
                   >
                     <span className="w-3.5 h-3.5 rounded bg-white text-emerald-600 flex items-center justify-center text-[9px] font-black">N</span>
-                    <span>네이버 스마트스토어</span>
+                    <span>시온유통 스마트스토어</span>
                   </a>
 
                   <a
@@ -1010,7 +994,6 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* 오른쪽: 오시는 길 및 주소 카드 */}
               <div className="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-md">
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
@@ -1082,7 +1065,6 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* 스펙 표 */}
               <div className="mb-6">
                 <h4 className="text-sm font-bold text-slate-900 mb-3 flex items-center gap-2">
                   <span className="w-1.5 h-4 bg-blue-600 rounded-full" />
@@ -1120,7 +1102,6 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* 특징 리스트 */}
               <div className="mb-6">
                 <h4 className="text-sm font-bold text-slate-900 mb-2 flex items-center gap-2">
                   <span className="w-1.5 h-4 bg-blue-600 rounded-full" />
@@ -1133,7 +1114,6 @@ export default function Home() {
                 </ul>
               </div>
 
-              {/* 적용 분야 */}
               <div className="mb-6">
                 <h4 className="text-sm font-bold text-slate-900 mb-2 flex items-center gap-2">
                   <span className="w-1.5 h-4 bg-blue-600 rounded-full" />
@@ -1148,7 +1128,6 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* 하단 모달 버튼 */}
               <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-100">
                 <button
                   type="button"
@@ -1186,7 +1165,7 @@ export default function Home() {
                 <a href="#about" className="hover:text-blue-400 transition-colors">회사소개</a>
                 <a href="#products" className="hover:text-blue-400 transition-colors">지멘스 레이더 카탈로그</a>
                 <a href="#channels" className="hover:text-red-400 transition-colors">유튜브·블로그</a>
-                <a href="https://smartstore.naver.com/skgk" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-400 transition-colors text-emerald-400 font-semibold">스마트스토어 ↗</a>
+                <a href={SION_SMARTSTORE_URL} target="_blank" rel="noopener noreferrer" className="hover:text-emerald-400 transition-colors text-emerald-400 font-semibold">시온유통 스마트스토어 ↗</a>
                 <a href="#contact" className="hover:text-blue-400 transition-colors">고객지원 및 문의</a>
               </div>
             </div>
@@ -1198,7 +1177,7 @@ export default function Home() {
                 <p className="mt-0.5">전화: 02-6396-4671 | 직통: 010-6314-4671 | 팩스: 02-6397-4671 | 이메일: hjy@skgk.co.kr</p>
               </div>
               <div className="md:text-right">
-                <p>© (주)서광계기. All Rights Reserved.</p>
+                <p>© (주)서광계기 & 시온유통. All Rights Reserved.</p>
                 <p className="mt-0.5">지멘스(SIEMENS), 서진인스텍(SEOJIN), 노켄(NOHKEN), 간사이(KANSAI) 협력 대리점</p>
               </div>
             </div>
