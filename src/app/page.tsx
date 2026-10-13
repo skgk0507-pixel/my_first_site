@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 
-// 시온유통 스마트스토어 공식 바로가기 링크 (로그인 없이 전체 상품 검색 및 제품 리스트 즉시 노출)
-const SION_SMARTSTORE_URL = "https://search.shopping.naver.com/search/all?query=%EC%8B%9C%EC%98%A8%EC%9C%A0%ED%86%B5";
+// 시온유통 공식 네이버 스마트스토어 링크
+const SION_SMARTSTORE_URL = "https://smartstore.naver.com/delightfuls";
 
 interface ProductCatalog {
   id: string;
