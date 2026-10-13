@@ -96,9 +96,76 @@ const radarProducts: ProductCatalog[] = [
   }
 ];
 
+type MediaChannelKey = "youtube" | "naver" | "tistory" | "smartstore";
+
+interface MediaChannel {
+  key: MediaChannelKey;
+  title: string;
+  subTitle: string;
+  badge: string;
+  badgeColor: string;
+  image: string;
+  desc: string;
+  linkText: string;
+  url: string;
+  tagList: string[];
+}
+
+const mediaChannels: MediaChannel[] = [
+  {
+    key: "youtube",
+    title: "서광계기 공식 유튜브 채널",
+    subTitle: "지멘스 SITRANS LR150 블루투스 세팅 & 출고 검수 시연",
+    badge: "YouTube 공식영상",
+    badgeColor: "bg-red-600 text-white",
+    image: "/seokwang_youtube_thumb.jpg",
+    desc: "80GHz 비접촉식 레이더 센서의 스마트폰 앱(Mobile IQ) 무선 파라미터 셋업, 반사 에코 커브 파형 점검 및 현장 설치 노하우를 서광계기 기술팀이 알기 쉽게 영상으로 시연합니다.",
+    linkText: "유튜브 영상 및 채널 보러가기",
+    url: "https://www.youtube.com/@%EC%84%9C%EA%B4%91%EA%B3%84%EA%B8%B0",
+    tagList: ["#지멘스LR150", "#블루투스세팅", "#수위계시연", "#서광계기유튜브"]
+  },
+  {
+    key: "naver",
+    title: "서광계기 네이버 공식 블로그",
+    subTitle: "현장 계측 시스템 시공 일지 & 정밀 센서 기술 노트",
+    badge: "NAVER 공식블로그",
+    badgeColor: "bg-emerald-600 text-white",
+    image: "/naver_blog_thumb.jpg",
+    desc: "다양한 산업 현장(수처리장, 화학 플랜트, 사일로 등)의 레벨센서, 유량계 시공 사례와 납품 기술 리포트를 상세한 사진 및 분석 데이터와 함께 지속 연재하고 있습니다.",
+    linkText: "네이버 블로그 포스팅 보러가기",
+    url: "https://blog.naver.com/skgk-2023",
+    tagList: ["#현장시공노트", "#센서기술자료", "#네이버공식블로그", "#레벨계측기"]
+  },
+  {
+    key: "tistory",
+    title: "서광계기 티스토리 기술 블로그",
+    subTitle: "산업용 공장자동화 센서 솔루션 & 제품 출고 전 테스트 리뷰",
+    badge: "TISTORY 블로그",
+    badgeColor: "bg-amber-600 text-white",
+    image: "/tistory_blog_thumb.jpg",
+    desc: "지멘스, 서진인스텍, 노켄, 간사이 등 주요 협력사 계측기의 출고 전 신호 점검, 결선 가이드, 배선 문제 해결 팁을 전문 엔지니어 관점에서 정리한 기술 블로그입니다.",
+    linkText: "티스토리 기술자료 보러가기",
+    url: "https://skgk-ins.tistory.com/",
+    tagList: ["#스마트팩토리", "#출고전테스트", "#센서결선가이드", "#계측기리뷰"]
+  },
+  {
+    key: "smartstore",
+    title: "시온유통 네이버 스마트스토어",
+    subTitle: "산업용 센서 및 계측 기기 온라인 간편 구매 쇼핑몰",
+    badge: "NAVER SmartStore",
+    badgeColor: "bg-green-600 text-white",
+    image: "/smartstore_thumb.jpg",
+    desc: "서광계기의 정밀 센서, 온도/압력계, 계측 부자재를 네이버페이(N Pay)로 간편하고 안전하게 주문할 수 있는 공식 온라인 스토어입니다. 빠른 배송과 신속한 기술 지원을 보장합니다.",
+    linkText: "시온유통 스마트스토어 바로가기",
+    url: "https://smartstore.naver.com",
+    tagList: ["#시온유통", "#스마트스토어", "#네이버페이결제", "#센서온라인주문"]
+  }
+];
+
 export default function Home() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<ProductCatalog | null>(null);
+  const [activeMediaTab, setActiveMediaTab] = useState<MediaChannelKey>("youtube");
   const [isCopied, setIsCopied] = useState(false);
 
   const handleCopyPhone = (text: string) => {
@@ -106,6 +173,8 @@ export default function Home() {
     setIsCopied(true);
     setTimeout(() => setIsCopied(false), 2000);
   };
+
+  const activeMedia = mediaChannels.find((m) => m.key === activeMediaTab) || mediaChannels[0];
 
   return (
     <div className="relative min-h-screen bg-slate-50/50 text-slate-900 flex flex-col selection:bg-blue-100 selection:text-blue-700">
@@ -117,61 +186,66 @@ export default function Home() {
 
       <div className="relative z-10 flex flex-col min-h-screen">
         {/* 1. 상단 네비게이션 헤더 */}
-        <header className="sticky top-0 z-50 w-full bg-white/90 backdrop-blur-md border-b border-slate-200/80 shadow-xs transition-all">
+        <header className="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-xs transition-all">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            {/* 서광계기 로고 */}
+            {/* 서광계기 & 시온유통 로고 */}
             <a href="#" className="flex items-center gap-3 group">
               <div className="w-11 h-11 rounded-xl bg-gradient-to-tr from-blue-700 via-blue-600 to-indigo-600 flex items-center justify-center text-white shadow-md shadow-blue-500/25 group-hover:scale-105 transition-transform duration-200">
                 <span className="font-extrabold text-base tracking-tighter">SK</span>
               </div>
               <div className="flex flex-col">
-                <div className="flex items-center gap-1.5">
-                  <span className="text-xl font-black tracking-tight text-slate-900 group-hover:text-blue-600 transition-colors">
+                <div className="flex items-center gap-2">
+                  <span className="text-lg sm:text-xl font-black tracking-tight text-slate-900 group-hover:text-blue-600 transition-colors">
                     (주)서광계기
                   </span>
-                  <span className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-blue-50 text-blue-700 border border-blue-200/70">
-                    공식 파트너
+                  <span className="text-slate-300">|</span>
+                  <span className="text-xs sm:text-sm font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+                    시온유통
                   </span>
                 </div>
-                <span className="text-[11px] uppercase tracking-wider text-slate-500 font-semibold">
-                  Seokwang Instrument & Automation
+                <span className="text-[10px] sm:text-[11px] uppercase tracking-wider text-slate-500 font-semibold">
+                  Seokwang Instrument & Zion Distribution
                 </span>
               </div>
             </a>
 
             {/* PC 네비게이션 메뉴 */}
-            <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-700">
+            <nav className="hidden lg:flex items-center gap-7 text-sm font-medium text-slate-700">
               <a href="#about" className="hover:text-blue-600 transition-colors py-1">
                 회사소개
               </a>
               <a href="#products" className="hover:text-blue-600 transition-colors py-1 font-semibold text-blue-600">
                 지멘스 레이더 카탈로그
               </a>
-              <a href="#youtube" className="hover:text-blue-600 transition-colors py-1 flex items-center gap-1.5">
+              <a href="#channels" className="hover:text-blue-600 transition-colors py-1 flex items-center gap-1.5">
                 <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
-                기술영상 (유튜브)
+                유튜브 & 블로그
+              </a>
+              <a href="#smartstore-section" className="hover:text-emerald-600 transition-colors py-1 flex items-center gap-1 text-emerald-700 font-semibold">
+                <span className="px-1 rounded bg-green-600 text-white text-[10px] font-black">N</span>
+                시온유통 스토어
               </a>
               <a href="#contact" className="hover:text-blue-600 transition-colors py-1">
                 견적 및 문의
               </a>
             </nav>
 
-            {/* 헤더 우측 빠른 전화/상담 버튼 */}
-            <div className="hidden md:flex items-center gap-3">
+            {/* 헤더 우측 버튼들 */}
+            <div className="hidden md:flex items-center gap-2.5">
               <a
-                href="tel:02-6396-4671"
-                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-semibold text-slate-700 hover:text-blue-600 hover:bg-slate-100 transition-colors"
+                href="https://smartstore.naver.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-bold bg-emerald-50 text-emerald-700 hover:bg-emerald-600 hover:text-white border border-emerald-200 transition-all shadow-2xs"
               >
-                <svg className="w-4 h-4 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                </svg>
-                02-6396-4671
+                <span className="w-3.5 h-3.5 rounded bg-emerald-600 text-white flex items-center justify-center text-[9px] font-black leading-none">N</span>
+                시온유통 스마트스토어
               </a>
               <a
                 href="#contact"
-                className="inline-flex items-center justify-center px-4 py-2.5 rounded-lg text-xs font-bold bg-blue-600 text-white hover:bg-blue-700 shadow-sm shadow-blue-500/25 hover:shadow transition-all"
+                className="inline-flex items-center justify-center px-4 py-2 rounded-lg text-xs font-bold bg-blue-600 text-white hover:bg-blue-700 shadow-sm shadow-blue-500/25 transition-all"
               >
-                제품 견적문의
+                견적문의
               </a>
             </div>
 
@@ -179,7 +253,7 @@ export default function Home() {
             <button
               type="button"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors"
+              className="lg:hidden p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors"
               aria-label="메뉴 열기"
             >
               {isMobileMenuOpen ? (
@@ -196,7 +270,7 @@ export default function Home() {
 
           {/* 모바일 드롭다운 메뉴 */}
           {isMobileMenuOpen && (
-            <div className="md:hidden border-b border-slate-200 bg-white/98 backdrop-blur-md px-4 pt-2 pb-6 space-y-2">
+            <div className="lg:hidden border-b border-slate-200 bg-white/98 backdrop-blur-md px-4 pt-2 pb-6 space-y-2">
               <a
                 href="#about"
                 onClick={() => setIsMobileMenuOpen(false)}
@@ -212,11 +286,20 @@ export default function Home() {
                 지멘스 레이더 카탈로그
               </a>
               <a
-                href="#youtube"
+                href="#channels"
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="block px-3 py-2.5 rounded-lg text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-600"
               >
-                서광계기 유튜브 기술영상
+                유튜브 & 블로그 미리보기
+              </a>
+              <a
+                href="https://smartstore.naver.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="block px-3 py-2.5 rounded-lg text-sm font-semibold text-emerald-700 bg-emerald-50/70"
+              >
+                시온유통 네이버 스마트스토어 바로가기 ↗
               </a>
               <a
                 href="#contact"
@@ -245,41 +328,51 @@ export default function Home() {
             {/* 상단 뱃지 */}
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-semibold bg-blue-50 border border-blue-200 text-blue-700 mb-6 shadow-xs">
               <span className="flex h-2 w-2 rounded-full bg-blue-600 animate-ping" />
-              지멘스(SIEMENS) 공정 계측기기 · 레이더 레벨 솔루션
+              지멘스(SIEMENS) 공정 계측기기 · 시온유통 온라인 스마트스토어
             </div>
 
             {/* 메인 타이틀 */}
             <h1 className="text-3xl sm:text-5xl md:text-6xl font-black text-slate-900 tracking-tight leading-[1.25] mb-6 max-w-4xl mx-auto break-keep">
-              지멘스 <span className="text-blue-600">80 GHz 고정밀 레이더</span><br className="hidden sm:inline" />
-              SITRANS 라인업 공식 카탈로그
+              지멘스 <span className="text-blue-600">80 GHz 고정밀 레이더</span> 카탈로그<br className="hidden sm:inline" />
+              & <span className="text-emerald-600">시온유통</span> 공식 온라인 스토어
             </h1>
 
             {/* 설명 문구 */}
             <p className="text-base sm:text-lg text-slate-600 leading-relaxed max-w-2xl mx-auto mb-8 font-normal break-keep">
-              (주)서광계기는 지멘스(Siemens), 서진인스텍 공식 파트너로서<br className="hidden sm:inline" />
-              검증된 80GHz 스마트 레이더 레벨 트랜스미터와 정밀 현장 세팅 기술 지원을 제공합니다.
+              (주)서광계기의 현장 검증 기술력과 지멘스 80GHz 스마트 레이더 라인업,<br className="hidden sm:inline" />
+              공식 유튜브·블로그 기술자료 및 시온유통 네이버 스마트스토어를 만나보세요.
             </p>
 
-            {/* CTA 버튼 */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5 max-w-md mx-auto">
+            {/* CTA 버튼들 */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5 max-w-2xl mx-auto">
               <a
                 href="#products"
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm shadow-md shadow-blue-600/25 hover:shadow-lg transition-all"
               >
-                <span>레이더 라인업 3종 보기</span>
+                <span>레이더 라인업 3종 카탈로그</span>
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                 </svg>
               </a>
 
               <a
-                href="#youtube"
+                href="#channels"
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-white hover:bg-red-50 text-slate-800 hover:text-red-600 font-bold text-sm border border-slate-200 hover:border-red-200 shadow-xs transition-all"
               >
                 <svg className="w-5 h-5 text-red-600" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
                 </svg>
-                <span>서광계기 시연 영상 보기</span>
+                <span>유튜브 · 블로그 보기</span>
+              </a>
+
+              <a
+                href="https://smartstore.naver.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm shadow-md shadow-emerald-600/25 transition-all"
+              >
+                <span className="w-4 h-4 rounded bg-white text-emerald-600 flex items-center justify-center text-[10px] font-black">N</span>
+                <span>시온유통 스마트스토어</span>
               </a>
             </div>
 
@@ -294,8 +387,8 @@ export default function Home() {
                 <p className="text-xs text-slate-500 font-medium mt-0.5">초정밀 계측 오차</p>
               </div>
               <div className="bg-white/60 backdrop-blur-xs p-3 rounded-xl border border-slate-100">
-                <p className="text-2xl font-black text-slate-900">IP68</p>
-                <p className="text-xs text-slate-500 font-medium mt-0.5">완전 방수·방진 등급</p>
+                <p className="text-2xl font-black text-emerald-600">N Pay</p>
+                <p className="text-xs text-slate-500 font-medium mt-0.5">시온유통 온라인 결제</p>
               </div>
               <div className="bg-white/60 backdrop-blur-xs p-3 rounded-xl border border-slate-100">
                 <p className="text-2xl font-black text-blue-600">Bluetooth</p>
@@ -436,136 +529,286 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 4. 서광계기 유튜브 링크 & 미리보기 섹션 */}
-        <section id="youtube" className="py-16 md:py-24 bg-gradient-to-b from-slate-900 via-slate-950 to-blue-950 text-white relative overflow-hidden">
+        {/* 4. [신규 통합] 유튜브 & 공식 블로그 & 스마트스토어 쇼케이스 섹션 */}
+        <section id="channels" className="py-16 md:py-24 bg-gradient-to-b from-slate-900 via-slate-950 to-blue-950 text-white relative overflow-hidden">
           {/* 장식용 글로우 배경 */}
-          <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-96 h-96 bg-red-600/15 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute bottom-10 right-1/4 w-80 h-80 bg-blue-600/15 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute top-1/3 left-10 w-96 h-96 bg-red-600/15 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute bottom-20 right-10 w-96 h-96 bg-emerald-600/15 rounded-full blur-3xl pointer-events-none" />
 
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            {/* 헤더 */}
-            <div className="text-center max-w-2xl mx-auto mb-12">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold bg-red-500/10 border border-red-500/30 text-red-400 mb-3">
-                <svg className="w-4 h-4 fill-current text-red-500" viewBox="0 0 24 24">
-                  <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-                </svg>
-                서광계기 공식 유튜브 채널
+            {/* 섹션 헤더 */}
+            <div className="text-center max-w-3xl mx-auto mb-10">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold bg-white/10 border border-white/20 text-blue-300 mb-3">
+                <span className="flex h-2 w-2 rounded-full bg-red-500 animate-pulse" />
+                서광계기 & 시온유통 공식 온라인 채널
               </div>
               <h2 className="text-2xl sm:text-4xl font-black tracking-tight break-keep">
-                현장 설치 & 블루투스 세팅 시연 영상
+                유튜브 · 블로그 · 시온유통 스마트스토어
               </h2>
               <p className="text-slate-400 text-sm sm:text-base mt-2 break-keep">
-                서광계기 전문가가 직접 시연하는 지멘스 LR150 레이더 센서 세팅법 및 출고 전 점검 영상을 유튜브에서 확인하세요.
+                영상 시연 가이드부터 현장 시공 기술 블로그, 온라인 간편 주문 스토어까지 모든 채널을 한눈에 확인하세요.
               </p>
             </div>
 
-            {/* 유튜브 비디오 프리뷰 카드 메인 */}
-            <div className="max-w-4xl mx-auto bg-slate-900/80 backdrop-blur-md rounded-3xl border border-slate-800 p-4 sm:p-6 shadow-2xl">
-              {/* 비디오 썸네일 및 플레이 오버레이 링크 */}
+            {/* 채널 선택 탭 버튼들 */}
+            <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-10 max-w-3xl mx-auto">
+              {mediaChannels.map((channel) => {
+                const isActive = activeMediaTab === channel.key;
+                return (
+                  <button
+                    key={channel.key}
+                    type="button"
+                    onClick={() => setActiveMediaTab(channel.key)}
+                    className={`px-4 sm:px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center gap-2 ${
+                      isActive
+                        ? "bg-white text-slate-900 shadow-lg scale-105"
+                        : "bg-slate-800/80 text-slate-300 hover:bg-slate-800 hover:text-white border border-slate-700/60"
+                    }`}
+                  >
+                    {channel.key === "youtube" && (
+                      <span className="w-2.5 h-2.5 rounded-full bg-red-600" />
+                    )}
+                    {channel.key === "naver" && (
+                      <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
+                    )}
+                    {channel.key === "tistory" && (
+                      <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />
+                    )}
+                    {channel.key === "smartstore" && (
+                      <span className="w-2.5 h-2.5 rounded-full bg-green-500" />
+                    )}
+                    <span>{channel.title.replace("서광계기 ", "").replace("시온유통 ", "")}</span>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* 선택된 탭 메인 대형 프리뷰 카드 */}
+            <div className="max-w-4xl mx-auto bg-slate-900/90 backdrop-blur-md rounded-3xl border border-slate-800 p-4 sm:p-7 shadow-2xl mb-12">
               <a
-                href="https://www.youtube.com/@%EC%84%9C%EA%B4%91%EA%B3%84%EA%B8%B0"
+                href={activeMedia.url}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group relative block aspect-16/9 w-full rounded-2xl overflow-hidden shadow-2xl border border-slate-700/60"
               >
                 <img
-                  src="/seokwang_youtube_thumb.jpg"
-                  alt="서광계기 지멘스 LR150 레이더 레벨 트랜스미터 유튜브 영상 미리보기"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  src={activeMedia.image}
+                  alt={activeMedia.title}
+                  className="w-full h-full object-cover group-hover:scale-104 transition-transform duration-500"
                 />
 
                 {/* 어두운 그라데이션 오버레이 */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/30 group-hover:bg-black/10 transition-colors" />
 
-                {/* 유튜브 재생 버튼 (중앙) */}
+                {/* 중앙 아이콘 (유튜브 재생 or 바로가기) */}
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-red-600 group-hover:bg-red-500 text-white flex items-center justify-center shadow-2xl shadow-red-600/50 group-hover:scale-110 group-active:scale-95 transition-all duration-300">
-                    <svg className="w-8 h-8 sm:w-9 sm:h-9 translate-x-0.5 fill-current" viewBox="0 0 24 24">
-                      <path d="M8 5v14l11-7z" />
-                    </svg>
-                  </div>
+                  {activeMedia.key === "youtube" ? (
+                    <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-red-600 group-hover:bg-red-500 text-white flex items-center justify-center shadow-2xl shadow-red-600/50 group-hover:scale-110 group-active:scale-95 transition-all duration-300">
+                      <svg className="w-8 h-8 sm:w-9 sm:h-9 translate-x-0.5 fill-current" viewBox="0 0 24 24">
+                        <path d="M8 5v14l11-7z" />
+                      </svg>
+                    </div>
+                  ) : (
+                    <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white/90 text-slate-900 group-hover:bg-white flex items-center justify-center shadow-2xl group-hover:scale-110 group-active:scale-95 transition-all duration-300">
+                      <svg className="w-6 h-6 sm:w-7 sm:h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                      </svg>
+                    </div>
+                  )}
                 </div>
 
-                {/* 영상 상단 좌측 태그 */}
+                {/* 상단 뱃지 */}
                 <div className="absolute top-4 left-4 flex items-center gap-2">
-                  <span className="px-2.5 py-1 rounded-md text-xs font-bold bg-red-600 text-white flex items-center gap-1 shadow-md">
-                    <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
-                      <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-                    </svg>
-                    YouTube HD
+                  <span className={`px-2.5 py-1 rounded-md text-xs font-bold ${activeMedia.badgeColor} shadow-md`}>
+                    {activeMedia.badge}
                   </span>
                   <span className="px-2.5 py-1 rounded-md text-xs font-bold bg-black/60 backdrop-blur-xs text-white">
-                    지멘스 LR150 블루투스 세팅법
+                    공식 링크 바로가기 ↗
                   </span>
                 </div>
 
-                {/* 영상 하단 자막 안내 */}
+                {/* 하단 캡션 */}
                 <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between">
                   <div className="max-w-lg">
-                    <p className="text-white font-bold text-sm sm:text-base drop-shadow-md">
-                      [서광계기] SIEMENS SITRANS LR150 80GHz 레이더 수위계 모바일 IQ 세팅 가이드
+                    <p className="text-white font-bold text-sm sm:text-lg drop-shadow-md">
+                      {activeMedia.subTitle}
                     </p>
                     <p className="text-slate-300 text-xs hidden sm:block mt-0.5">
-                      클릭하시면 서광계기 공식 유튜브 영상으로 연결됩니다.
+                      클릭하시면 {activeMedia.title}로 새 창에서 바로 연결됩니다.
                     </p>
                   </div>
-                  <span className="px-2 py-1 rounded bg-black/70 text-slate-200 text-xs font-mono font-bold">
-                    08:45
-                  </span>
+                  <div className="hidden sm:flex gap-1.5">
+                    {activeMedia.tagList.map((tag, idx) => (
+                      <span key={idx} className="px-2 py-0.5 rounded bg-black/70 text-slate-300 text-[11px] font-mono">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </a>
 
-              {/* 하단 채널 안내 바 */}
-              <div className="mt-5 pt-5 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-red-600/20 border border-red-500/40 flex items-center justify-center text-red-500 font-bold">
-                    SK
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-sm text-white flex items-center gap-1.5">
-                      서광계기 공식 채널 (@서광계기)
-                      <span className="text-blue-400" title="공식 인증">✓</span>
-                    </h4>
-                    <p className="text-xs text-slate-400">
-                      레벨센서, 유량계, 압력계 실무 및 제품 출고 전 테스트 영상 연재
-                    </p>
-                  </div>
+              {/* 하단 상세 설명 & 바로가기 버튼 바 */}
+              <div className="mt-5 pt-5 border-t border-slate-800 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                <div className="flex-1">
+                  <h4 className="font-bold text-base text-white flex items-center gap-2">
+                    {activeMedia.title}
+                    <span className="text-blue-400 text-xs" title="공식 채널">✓ 공식</span>
+                  </h4>
+                  <p className="text-xs sm:text-sm text-slate-400 mt-1 leading-relaxed">
+                    {activeMedia.desc}
+                  </p>
                 </div>
 
-                <div className="flex items-center gap-3 w-full sm:w-auto">
+                <a
+                  href={activeMedia.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-bold text-xs sm:text-sm shadow-md transition-all shrink-0 w-full md:w-auto ${
+                    activeMedia.key === "smartstore"
+                      ? "bg-emerald-600 hover:bg-emerald-500 text-white shadow-emerald-600/30"
+                      : activeMedia.key === "youtube"
+                      ? "bg-red-600 hover:bg-red-500 text-white shadow-red-600/30"
+                      : activeMedia.key === "naver"
+                      ? "bg-emerald-600 hover:bg-emerald-500 text-white shadow-emerald-600/30"
+                      : "bg-amber-600 hover:bg-amber-500 text-white shadow-amber-600/30"
+                  }`}
+                >
+                  <span>{activeMedia.linkText}</span>
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+
+            {/* 4개 채널 전체 미니 카드 그리드 (한눈에 둘러보기) */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+              {mediaChannels.map((channel) => (
+                <div
+                  key={channel.key}
+                  className={`bg-slate-900/70 rounded-2xl border p-4 flex flex-col justify-between transition-all hover:-translate-y-1 ${
+                    activeMediaTab === channel.key
+                      ? "border-blue-400 shadow-lg shadow-blue-500/10"
+                      : "border-slate-800 hover:border-slate-700"
+                  }`}
+                >
+                  <div>
+                    {/* 이미지 썸네일 */}
+                    <div 
+                      onClick={() => setActiveMediaTab(channel.key)}
+                      className="cursor-pointer relative aspect-16/9 rounded-xl overflow-hidden mb-3 bg-slate-800 group"
+                    >
+                      <img
+                        src={channel.image}
+                        alt={channel.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                      <span className={`absolute top-2 left-2 px-2 py-0.5 rounded text-[10px] font-bold ${channel.badgeColor}`}>
+                        {channel.badge}
+                      </span>
+                    </div>
+
+                    <h5 className="font-bold text-sm text-white mb-1 line-clamp-1">
+                      {channel.title}
+                    </h5>
+                    <p className="text-slate-400 text-xs line-clamp-2 leading-relaxed mb-3">
+                      {channel.subTitle}
+                    </p>
+                  </div>
+
+                  <div className="pt-3 border-t border-slate-800/80 flex items-center justify-between">
+                    <button
+                      type="button"
+                      onClick={() => setActiveMediaTab(channel.key)}
+                      className="text-xs font-semibold text-blue-400 hover:text-blue-300"
+                    >
+                      상세 미리보기
+                    </button>
+                    <a
+                      href={channel.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 text-xs font-bold text-slate-200 hover:text-white"
+                    >
+                      <span>접속</span>
+                      <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </a>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* 5. [신규 강조] 시온유통 네이버 스마트스토어 전용 소개 배너 섹션 */}
+        <section id="smartstore-section" className="py-16 md:py-20 bg-emerald-50/70 border-y border-emerald-200/60">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="bg-gradient-to-r from-emerald-800 via-teal-800 to-slate-900 rounded-3xl p-6 sm:p-10 lg:p-12 text-white shadow-xl flex flex-col lg:flex-row items-center gap-8 justify-between">
+              <div className="max-w-2xl">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-white/10 border border-white/20 text-emerald-300 mb-4">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400" />
+                  온라인 계측기 전문 쇼핑몰
+                </div>
+                <h3 className="text-2xl sm:text-4xl font-black tracking-tight mb-3 break-keep">
+                  시온유통 네이버 스마트스토어에서<br />
+                  간편하게 온라인 주문하세요
+                </h3>
+                <p className="text-emerald-100 text-sm sm:text-base leading-relaxed mb-6 break-keep">
+                  각종 산업용 센서, 압력계, 디지털 온도 컨트롤러, 케이블 부속품을 안전한 네이버페이(N Pay) 결제 및 빠른 배송으로 구매하실 수 있습니다. 대량 납품 및 전자세금계산서 발행도 즉시 지원합니다.
+                </p>
+                <div className="flex flex-wrap gap-3">
                   <a
-                    href="https://www.youtube.com/@%EC%84%9C%EA%B4%91%EA%B3%84%EA%B8%B0"
+                    href="https://smartstore.naver.com"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-red-600 hover:bg-red-500 text-white font-bold text-xs sm:text-sm shadow-md shadow-red-600/25 transition-all"
+                    className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-white text-emerald-900 font-extrabold text-sm hover:bg-emerald-50 shadow-md transition-all"
                   >
-                    <span>유튜브 채널 바로가기</span>
+                    <span className="w-4 h-4 rounded bg-emerald-600 text-white flex items-center justify-center text-[10px] font-black">N</span>
+                    <span>시온유통 스토어 바로가기</span>
                     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                     </svg>
                   </a>
+                  <a
+                    href="tel:02-6396-4671"
+                    className="inline-flex items-center gap-2 px-5 py-3.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-sm border border-white/20 transition-all"
+                  >
+                    <span>온라인 구매 재고 문의 (02-6396-4671)</span>
+                  </a>
                 </div>
+              </div>
+
+              {/* 우측 스마트스토어 프리뷰 카드 미니 */}
+              <div className="w-full lg:w-96 rounded-2xl overflow-hidden border border-emerald-400/30 shadow-2xl bg-white shrink-0">
+                <img
+                  src="/smartstore_thumb.jpg"
+                  alt="시온유통 스마트스토어 온라인 간편 주문"
+                  className="w-full h-auto object-cover"
+                />
               </div>
             </div>
           </div>
         </section>
 
-        {/* 5. 회사소개 & 문의하기 (서광계기) */}
+        {/* 6. 회사소개 & 문의하기 (서광계기 & 시온유통) */}
         <section id="contact" className="py-16 md:py-24 bg-white/70">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              {/* 왼쪽: 서광계기 소개 및 안내 */}
+              {/* 왼쪽: 서광계기 & 시온유통 안내 */}
               <div>
                 <span className="text-xs font-bold text-blue-600 uppercase tracking-wider">
                   Contact & Technical Service
                 </span>
                 <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mt-2 mb-4 break-keep">
                   공장 자동화 및 정밀 계측 솔루션<br />
-                  <span className="text-blue-600">(주)서광계기</span>에 문의하세요
+                  <span className="text-blue-600">(주)서광계기</span> · <span className="text-emerald-600">시온유통</span>에 문의하세요
                 </h2>
                 <p className="text-slate-600 text-sm sm:text-base leading-relaxed mb-6 break-keep">
                   서광계기는 지멘스(Siemens), 서진인스텍(Seojin Instech), 노켄(Nohken), 간사이(Kansai) 등 
                   세계적인 계측 장비의 공급과 현장 기술 지원을 30여 년간 담당해 온 신뢰의 계측기 전문 기업입니다.
+                  시온유통 스마트스토어를 통해 신속한 온라인 부품 조달도 지원합니다.
                 </p>
 
                 {/* 연락처 카드 그리드 */}
@@ -609,12 +852,22 @@ export default function Home() {
                   </button>
 
                   <a
-                    href="https://blog.naver.com/skgk-2023"
+                    href="https://smartstore.naver.com"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-emerald-600 text-white font-bold text-xs hover:bg-emerald-700 transition-colors shadow-sm"
                   >
-                    <span>서광계기 네이버 블로그</span>
+                    <span className="w-3.5 h-3.5 rounded bg-white text-emerald-600 flex items-center justify-center text-[9px] font-black">N</span>
+                    <span>시온유통 스마트스토어</span>
+                  </a>
+
+                  <a
+                    href="https://blog.naver.com/skgk-2023"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-slate-900 text-white font-bold text-xs hover:bg-slate-800 transition-colors shadow-sm"
+                  >
+                    <span>네이버 블로그</span>
                   </a>
 
                   <a
@@ -623,7 +876,7 @@ export default function Home() {
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-amber-600 text-white font-bold text-xs hover:bg-amber-700 transition-colors shadow-sm"
                   >
-                    <span>서광계기 티스토리</span>
+                    <span>티스토리</span>
                   </a>
                 </div>
               </div>
@@ -663,7 +916,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 6. 모달: 제품 상세 카탈로그 스펙 */}
+        {/* 7. 모달: 제품 상세 카탈로그 스펙 */}
         {selectedProduct && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
             <div className="bg-white rounded-2xl max-w-2xl w-full p-6 sm:p-8 max-h-[90vh] overflow-y-auto shadow-2xl relative animate-in fade-in zoom-in-95 duration-200">
@@ -788,7 +1041,7 @@ export default function Home() {
           </div>
         )}
 
-        {/* 7. 푸터 */}
+        {/* 8. 푸터 */}
         <footer id="about" className="mt-auto bg-slate-900 text-slate-400 py-12 text-xs border-t border-slate-800">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 pb-8 border-b border-slate-800">
@@ -797,26 +1050,31 @@ export default function Home() {
                   SK
                 </div>
                 <div>
-                  <span className="font-bold text-white text-base">(주)서광계기</span>
-                  <p className="text-[11px] text-slate-500">Seokwang Instrument & Automation Co., Ltd.</p>
+                  <div className="flex items-center gap-2">
+                    <span className="font-bold text-white text-base">(주)서광계기</span>
+                    <span className="text-slate-500">·</span>
+                    <span className="font-bold text-emerald-400 text-sm">시온유통</span>
+                  </div>
+                  <p className="text-[11px] text-slate-500">Seokwang Instrument & Zion Distribution Co., Ltd.</p>
                 </div>
               </div>
               <div className="flex flex-wrap gap-5 text-slate-300">
                 <a href="#about" className="hover:text-blue-400 transition-colors">회사소개</a>
                 <a href="#products" className="hover:text-blue-400 transition-colors">지멘스 레이더 카탈로그</a>
-                <a href="#youtube" className="hover:text-red-400 transition-colors">서광계기 유튜브</a>
+                <a href="#channels" className="hover:text-red-400 transition-colors">유튜브·블로그</a>
+                <a href="https://smartstore.naver.com" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-400 transition-colors text-emerald-400 font-semibold">시온유통 스마트스토어 ↗</a>
                 <a href="#contact" className="hover:text-blue-400 transition-colors">고객지원 및 문의</a>
               </div>
             </div>
             
             <div className="pt-6 flex flex-col md:flex-row justify-between gap-4 text-[11px] text-slate-500 leading-relaxed">
               <div>
-                <p>상호명: (주)서광계기 | 대표자: 황정용 | 사업자등록번호: 532-86-03115</p>
+                <p>상호명: (주)서광계기 · 시온유통 | 대표자: 황정용 / 진미현 | 통신판매업 신고번호: 2023-경기광명-0886</p>
                 <p className="mt-0.5">주소: 경기도 부천시 소사구 옥길동 794-1 우성테크노파크1차 507호 (14786)</p>
-                <p className="mt-0.5">전화: 02-6396-4671 | 팩스: 02-6397-4671 | 이메일: hjy@skgk.co.kr | 세금계산서: tax@skgk.co.kr</p>
+                <p className="mt-0.5">전화: 02-6396-4671 | 직통: 010-6314-4671 | 팩스: 02-6397-4671 | 이메일: hjy@skgk.co.kr</p>
               </div>
               <div className="md:text-right">
-                <p>© (주)서광계기. All Rights Reserved.</p>
+                <p>© (주)서광계기 & 시온유통. All Rights Reserved.</p>
                 <p className="mt-0.5">지멘스(SIEMENS), 서진인스텍(SEOJIN), 노켄(NOHKEN), 간사이(KANSAI) 협력 대리점</p>
               </div>
             </div>
