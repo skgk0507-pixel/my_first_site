@@ -151,14 +151,14 @@ const mediaChannels: MediaChannel[] = [
   {
     key: "smartstore",
     title: "시온유통 네이버 스마트스토어",
-    subTitle: "산업용 센서 및 계측 기기 온라인 간편 구매 쇼핑몰",
+    subTitle: "산업용 센서 및 계측 기기 전체 상품 리스트",
     badge: "NAVER SmartStore",
     badgeColor: "bg-green-600 text-white",
     image: "/smartstore_thumb.jpg",
-    desc: "서광계기의 정밀 센서, 온도/압력계, 계측 부자재를 네이버페이(N Pay)로 간편하고 안전하게 주문할 수 있는 공식 온라인 스토어입니다. 빠른 배송과 신속한 기술 지원을 보장합니다.",
-    linkText: "시온유통 스마트스토어 바로가기",
-    url: "https://smartstore.naver.com",
-    tagList: ["#시온유통", "#스마트스토어", "#네이버페이결제", "#센서온라인주문"]
+    desc: "서광계기의 정밀 센서, 온도/압력계, 계측 부자재를 네이버페이(N Pay)로 간편하고 안전하게 주문할 수 있는 공식 온라인 스토어입니다. 접속 시 전체 제품 리스트를 즉시 확인하실 수 있습니다.",
+    linkText: "시온유통 전체 제품 리스트 바로가기",
+    url: "https://smartstore.naver.com/skgk/category/ALL?cp=1",
+    tagList: ["#시온유통", "#스마트스토어", "#전체제품리스트", "#네이버페이결제"]
   }
 ];
 
@@ -223,7 +223,7 @@ export default function Home() {
               </a>
               <a href="#smartstore-section" className="hover:text-emerald-600 transition-colors py-1 flex items-center gap-1 text-emerald-700 font-semibold">
                 <span className="px-1 rounded bg-green-600 text-white text-[10px] font-black">N</span>
-                시온유통 스토어
+                시온유통 스토어 (제품리스트)
               </a>
               <a href="#contact" className="hover:text-blue-600 transition-colors py-1">
                 견적 및 문의
@@ -233,13 +233,13 @@ export default function Home() {
             {/* 헤더 우측 버튼들 */}
             <div className="hidden md:flex items-center gap-2.5">
               <a
-                href="https://smartstore.naver.com"
+                href="https://smartstore.naver.com/skgk/category/ALL?cp=1"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-bold bg-emerald-50 text-emerald-700 hover:bg-emerald-600 hover:text-white border border-emerald-200 transition-all shadow-2xs"
               >
                 <span className="w-3.5 h-3.5 rounded bg-emerald-600 text-white flex items-center justify-center text-[9px] font-black leading-none">N</span>
-                시온유통 스마트스토어
+                시온유통 전체 제품 보기
               </a>
               <a
                 href="#contact"
@@ -293,13 +293,13 @@ export default function Home() {
                 유튜브 & 블로그 미리보기
               </a>
               <a
-                href="https://smartstore.naver.com"
+                href="https://smartstore.naver.com/skgk/category/ALL?cp=1"
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="block px-3 py-2.5 rounded-lg text-sm font-semibold text-emerald-700 bg-emerald-50/70"
               >
-                시온유통 네이버 스마트스토어 바로가기 ↗
+                시온유통 전체 제품 리스트 ↗
               </a>
               <a
                 href="#contact"
@@ -340,7 +340,7 @@ export default function Home() {
             {/* 설명 문구 */}
             <p className="text-base sm:text-lg text-slate-600 leading-relaxed max-w-2xl mx-auto mb-8 font-normal break-keep">
               (주)서광계기의 현장 검증 기술력과 지멘스 80GHz 스마트 레이더 라인업,<br className="hidden sm:inline" />
-              공식 유튜브·블로그 기술자료 및 시온유통 네이버 스마트스토어를 만나보세요.
+              공식 유튜브·블로그 기술자료 및 시온유통 네이버 스마트스토어의 전체 제품 리스트를 확인하세요.
             </p>
 
             {/* CTA 버튼들 */}
@@ -366,13 +366,13 @@ export default function Home() {
               </a>
 
               <a
-                href="https://smartstore.naver.com"
+                href="https://smartstore.naver.com/skgk/category/ALL?cp=1"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm shadow-md shadow-emerald-600/25 transition-all"
               >
                 <span className="w-4 h-4 rounded bg-white text-emerald-600 flex items-center justify-center text-[10px] font-black">N</span>
-                <span>시온유통 스마트스토어</span>
+                <span>스토어 전체 제품 리스트 ↗</span>
               </a>
             </div>
 
@@ -529,7 +529,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 4. [신규 통합] 유튜브 & 공식 블로그 & 스마트스토어 쇼케이스 섹션 */}
+        {/* 4. 유튜브 & 공식 블로그 & 스마트스토어 쇼케이스 섹션 */}
         <section id="channels" className="py-16 md:py-24 bg-gradient-to-b from-slate-900 via-slate-950 to-blue-950 text-white relative overflow-hidden">
           {/* 장식용 글로우 배경 */}
           <div className="absolute top-1/3 left-10 w-96 h-96 bg-red-600/15 rounded-full blur-3xl pointer-events-none" />
@@ -546,7 +546,7 @@ export default function Home() {
                 유튜브 · 블로그 · 시온유통 스마트스토어
               </h2>
               <p className="text-slate-400 text-sm sm:text-base mt-2 break-keep">
-                영상 시연 가이드부터 현장 시공 기술 블로그, 온라인 간편 주문 스토어까지 모든 채널을 한눈에 확인하세요.
+                영상 시연 가이드부터 현장 시공 기술 블로그, 스마트스토어 전체 제품 리스트까지 한눈에 확인하세요.
               </p>
             </div>
 
@@ -623,7 +623,7 @@ export default function Home() {
                     {activeMedia.badge}
                   </span>
                   <span className="px-2.5 py-1 rounded-md text-xs font-bold bg-black/60 backdrop-blur-xs text-white">
-                    공식 링크 바로가기 ↗
+                    {activeMedia.key === "smartstore" ? "전체 제품 리스트 바로가기 ↗" : "공식 링크 바로가기 ↗"}
                   </span>
                 </div>
 
@@ -634,7 +634,7 @@ export default function Home() {
                       {activeMedia.subTitle}
                     </p>
                     <p className="text-slate-300 text-xs hidden sm:block mt-0.5">
-                      클릭하시면 {activeMedia.title}로 새 창에서 바로 연결됩니다.
+                      클릭하시면 {activeMedia.title} 페이지로 바로 연결됩니다.
                     </p>
                   </div>
                   <div className="hidden sm:flex gap-1.5">
@@ -742,31 +742,31 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 5. [신규 강조] 시온유통 네이버 스마트스토어 전용 소개 배너 섹션 */}
+        {/* 5. 시온유통 네이버 스마트스토어 전용 소개 배너 섹션 */}
         <section id="smartstore-section" className="py-16 md:py-20 bg-emerald-50/70 border-y border-emerald-200/60">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="bg-gradient-to-r from-emerald-800 via-teal-800 to-slate-900 rounded-3xl p-6 sm:p-10 lg:p-12 text-white shadow-xl flex flex-col lg:flex-row items-center gap-8 justify-between">
               <div className="max-w-2xl">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-white/10 border border-white/20 text-emerald-300 mb-4">
                   <span className="w-2 h-2 rounded-full bg-emerald-400" />
-                  온라인 계측기 전문 쇼핑몰
+                  온라인 계측기 전문 쇼핑몰 (전체 제품 목록)
                 </div>
                 <h3 className="text-2xl sm:text-4xl font-black tracking-tight mb-3 break-keep">
-                  시온유통 네이버 스마트스토어에서<br />
-                  간편하게 온라인 주문하세요
+                  시온유통 스마트스토어에서<br />
+                  전체 상품 리스트를 즉시 확인하세요
                 </h3>
                 <p className="text-emerald-100 text-sm sm:text-base leading-relaxed mb-6 break-keep">
-                  각종 산업용 센서, 압력계, 디지털 온도 컨트롤러, 케이블 부속품을 안전한 네이버페이(N Pay) 결제 및 빠른 배송으로 구매하실 수 있습니다. 대량 납품 및 전자세금계산서 발행도 즉시 지원합니다.
+                  각종 산업용 센서, 압력계, 디지털 온도 컨트롤러, 케이블 부속품의 실시간 재고와 가격을 한눈에 확인하고 네이버페이(N Pay)로 간편하게 주문하실 수 있습니다.
                 </p>
                 <div className="flex flex-wrap gap-3">
                   <a
-                    href="https://smartstore.naver.com"
+                    href="https://smartstore.naver.com/skgk/category/ALL?cp=1"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-white text-emerald-900 font-extrabold text-sm hover:bg-emerald-50 shadow-md transition-all"
                   >
                     <span className="w-4 h-4 rounded bg-emerald-600 text-white flex items-center justify-center text-[10px] font-black">N</span>
-                    <span>시온유통 스토어 바로가기</span>
+                    <span>시온유통 전체 제품 리스트 바로가기 ↗</span>
                     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                     </svg>
@@ -782,11 +782,18 @@ export default function Home() {
 
               {/* 우측 스마트스토어 프리뷰 카드 미니 */}
               <div className="w-full lg:w-96 rounded-2xl overflow-hidden border border-emerald-400/30 shadow-2xl bg-white shrink-0">
-                <img
-                  src="/smartstore_thumb.jpg"
-                  alt="시온유통 스마트스토어 온라인 간편 주문"
-                  className="w-full h-auto object-cover"
-                />
+                <a
+                  href="https://smartstore.naver.com/skgk/category/ALL?cp=1"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block group"
+                >
+                  <img
+                    src="/smartstore_thumb.jpg"
+                    alt="시온유통 스마트스토어 전체 제품 리스트 바로가기"
+                    className="w-full h-auto object-cover group-hover:scale-103 transition-transform duration-300"
+                  />
+                </a>
               </div>
             </div>
           </div>
@@ -852,13 +859,13 @@ export default function Home() {
                   </button>
 
                   <a
-                    href="https://smartstore.naver.com"
+                    href="https://smartstore.naver.com/skgk/category/ALL?cp=1"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-emerald-600 text-white font-bold text-xs hover:bg-emerald-700 transition-colors shadow-sm"
                   >
                     <span className="w-3.5 h-3.5 rounded bg-white text-emerald-600 flex items-center justify-center text-[9px] font-black">N</span>
-                    <span>시온유통 스마트스토어</span>
+                    <span>시온유통 전체 제품 리스트</span>
                   </a>
 
                   <a
@@ -1062,7 +1069,7 @@ export default function Home() {
                 <a href="#about" className="hover:text-blue-400 transition-colors">회사소개</a>
                 <a href="#products" className="hover:text-blue-400 transition-colors">지멘스 레이더 카탈로그</a>
                 <a href="#channels" className="hover:text-red-400 transition-colors">유튜브·블로그</a>
-                <a href="https://smartstore.naver.com" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-400 transition-colors text-emerald-400 font-semibold">시온유통 스마트스토어 ↗</a>
+                <a href="https://smartstore.naver.com/skgk/category/ALL?cp=1" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-400 transition-colors text-emerald-400 font-semibold">시온유통 제품리스트 ↗</a>
                 <a href="#contact" className="hover:text-blue-400 transition-colors">고객지원 및 문의</a>
               </div>
             </div>
