@@ -245,21 +245,34 @@ export default function Home() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [submittedInfo, setSubmittedInfo] = useState<{ name: string; phone: string } | null>(null);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setInquiryData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmitInquiry = (e: React.FormEvent) => {
+  const handleSubmitInquiry = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!inquiryData.name || !inquiryData.phone) {
       alert("성함과 연락처를 입력해 주세요.");
       return;
     }
     setIsSubmitting(true);
-    setTimeout(() => {
-      setIsSubmitting(false);
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(inquiryData),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || "문의 전송에 실패했습니다.");
+      }
+
+      setSubmittedInfo({ name: inquiryData.name, phone: inquiryData.phone });
       setSubmitSuccess(true);
       setInquiryData({
         name: "",
@@ -269,8 +282,17 @@ export default function Home() {
         productInterest: "SITRANS LR150 (80GHz 콤팩트 레이더)",
         message: ""
       });
-      setTimeout(() => setSubmitSuccess(false), 6000);
-    }, 900);
+
+      const formEl = document.getElementById("contact-form");
+      if (formEl) {
+        formEl.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    } catch (err: any) {
+      console.error(err);
+      alert(err.message || "문의 전송 중 오류가 발생했습니다. 대표전화(02-6396-4671)로 문의 바랍니다.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleCopyPhone = (text: string) => {
@@ -1250,6 +1272,50 @@ export default function Home() {
             </div>
           </a>
         </div>
+
+        {/* 6.6. 문의사항 접수 성공 알림 팝업 모달 */}
+        {submitSuccess && submittedInfo && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in duration-200">
+            <div className="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl border border-slate-100 text-center relative animate-in zoom-in-95 duration-200">
+              <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto mb-4 shadow-inner">
+                <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+
+              <span className="px-3 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200/60 inline-block mb-3">
+                문의 접수 및 이메일 전송 완료
+              </span>
+
+              <h3 className="text-xl sm:text-2xl font-black text-slate-900 mb-2">
+                문의사항이 접수되었습니다!
+              </h3>
+
+              <div className="bg-slate-50 rounded-xl p-3.5 mb-5 text-xs text-left border border-slate-200/70 space-y-1.5">
+                <div className="flex justify-between">
+                  <span className="text-slate-500">성함 / 담당자:</span>
+                  <span className="font-bold text-slate-900">{submittedInfo.name} 고객님</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-slate-500">회신 연락처:</span>
+                  <span className="font-bold text-blue-600">{submittedInfo.phone}</span>
+                </div>
+              </div>
+
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mb-6 break-keep">
+                서광계기 기술영업 담당자가 확인 후 기재해주신 연락처로 신속히 견적 및 기술 상담을 드리겠습니다.
+              </p>
+
+              <button
+                type="button"
+                onClick={() => setSubmitSuccess(false)}
+                className="w-full py-3.5 px-6 rounded-xl bg-slate-900 hover:bg-blue-600 text-white font-bold text-sm shadow-md transition-colors cursor-pointer"
+              >
+                확인 및 닫기
+              </button>
+            </div>
+          </div>
+        )}
 
         {/* 7. 모달: 제품 상세 카탈로그 스펙 */}
         {selectedProduct && (
