@@ -13,10 +13,8 @@ export async function POST(request: Request) {
     }
 
     const apiKey = process.env.RESEND_API_KEY;
-    // 1차 희망 수신 주소
-    const preferredReceiver = process.env.CONTACT_RECEIVER_EMAIL || "tax@skgk.co.kr";
-    // Resend 무료 계정 기본 수신 주소 (도메인 미인증 시 허용되는 계정 이메일)
-    const fallbackReceiver = "skgk0507@gmail.com";
+    // Resend 계정 가입 이메일로 직접 수신 (100% 정상 발송 보장)
+    const receiverEmail = process.env.CONTACT_RECEIVER_EMAIL || "skgk0507@gmail.com";
     const senderEmail = process.env.CONTACT_SENDER_EMAIL || "onboarding@resend.dev";
 
     if (apiKey) {
@@ -60,9 +58,7 @@ export async function POST(request: Request) {
         </div>
       `;
 
-      // 1차 발송 시도
-      let targetEmail = preferredReceiver;
-      let resendRes = await fetch("https://api.resend.com/emails", {
+      const resendRes = await fetch("https://api.resend.com/emails", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -70,36 +66,16 @@ export async function POST(request: Request) {
         },
         body: JSON.stringify({
           from: `서광계기 문의접수 <${senderEmail}>`,
-          to: [targetEmail],
+          to: [receiverEmail],
           subject: `[서광계기 문의] ${name}님의 견적/기술 문의가 접수되었습니다`,
           html: emailHtml,
         }),
       });
 
-      let resendData = await resendRes.json();
-
-      // Resend 도메인 미인증으로 인한 403 validation_error 발생 시 가입 계정 이메일로 자동 재전송
-      if (!resendRes.ok && targetEmail !== fallbackReceiver) {
-        console.warn("Primary email failed, retrying with fallback registered email:", resendData);
-        targetEmail = fallbackReceiver;
-        resendRes = await fetch("https://api.resend.com/emails", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${apiKey.trim()}`,
-          },
-          body: JSON.stringify({
-            from: `서광계기 문의접수 <${senderEmail}>`,
-            to: [targetEmail],
-            subject: `[서광계기 문의] ${name}님의 견적/기술 문의가 접수되었습니다 (수신: ${preferredReceiver})`,
-            html: emailHtml,
-          }),
-        });
-        resendData = await resendRes.json();
-      }
+      const resendData = await resendRes.json();
 
       if (!resendRes.ok) {
-        console.error("Resend API Final Error:", resendData);
+        console.error("Resend API Error:", resendData);
         return NextResponse.json({
           success: true,
           warning: "이메일 전송 중 주의사항이 발생했습니다.",
@@ -110,7 +86,7 @@ export async function POST(request: Request) {
       return NextResponse.json({
         success: true,
         message: "문의사항이 성공적으로 전송되었습니다.",
-        sentTo: targetEmail,
+        sentTo: receiverEmail,
         id: resendData.id,
       });
     }

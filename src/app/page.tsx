@@ -1008,8 +1008,8 @@ export default function Home() {
                     </div>
                     <div className="bg-slate-50 p-3.5 rounded-xl border border-slate-100">
                       <p className="text-[11px] text-slate-500 font-semibold mb-0.5">견적 문의 이메일</p>
-                      <a href="mailto:tax@skgk.co.kr" className="text-xs font-bold text-blue-600 hover:underline">
-                        tax@skgk.co.kr
+                      <a href="mailto:skgk0507@gmail.com" className="text-xs font-bold text-blue-600 hover:underline">
+                        skgk0507@gmail.com
                       </a>
                     </div>
                     <div className="bg-slate-50 p-3.5 rounded-xl border border-slate-100">
@@ -1463,7 +1463,7 @@ export default function Home() {
               <div>
                 <p>상호명: (주)서광계기 | 대표자: 황정용 | 사업자등록번호: 532-86-03115</p>
                 <p className="mt-0.5">주소: 경기도 부천시 소사구 옥길동 794-1 우성테크노파크1차 507호 (14786)</p>
-                <p className="mt-0.5">전화: 02-6396-4671 | 직통: 010-6314-4671 | 팩스: 02-6397-4671 | 이메일: tax@skgk.co.kr</p>
+                <p className="mt-0.5">전화: 02-6396-4671 | 직통: 010-6314-4671 | 팩스: 02-6397-4671 | 이메일: skgk0507@gmail.com</p>
               </div>
               <div className="md:text-right">
                 <p>© (주)서광계기 & 시온유통. All Rights Reserved.</p>
