@@ -13,7 +13,7 @@ export async function POST(request: Request) {
     }
 
     const apiKey = process.env.RESEND_API_KEY;
-    const receiverEmail = process.env.CONTACT_RECEIVER_EMAIL || "hjy@skgk.co.kr";
+    const receiverEmail = process.env.CONTACT_RECEIVER_EMAIL || "tax@skgk.co.kr";
     const senderEmail = process.env.CONTACT_SENDER_EMAIL || "onboarding@resend.dev";
 
     // Resend API 키가 설정되어 있는 경우 실제 이메일 전송
