@@ -234,6 +234,45 @@ export default function Home() {
   const [activeMediaTab, setActiveMediaTab] = useState<MediaChannelKey>("youtube");
   const [isCopied, setIsCopied] = useState(false);
 
+  // 온라인 문의사항 폼 상태
+  const [inquiryData, setInquiryData] = useState({
+    name: "",
+    phone: "",
+    company: "",
+    email: "",
+    productInterest: "SITRANS LR150 (80GHz 콤팩트 레이더)",
+    message: ""
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setInquiryData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmitInquiry = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!inquiryData.name || !inquiryData.phone) {
+      alert("성함과 연락처를 입력해 주세요.");
+      return;
+    }
+    setIsSubmitting(true);
+    setTimeout(() => {
+      setIsSubmitting(false);
+      setSubmitSuccess(true);
+      setInquiryData({
+        name: "",
+        phone: "",
+        company: "",
+        email: "",
+        productInterest: "SITRANS LR150 (80GHz 콤팩트 레이더)",
+        message: ""
+      });
+      setTimeout(() => setSubmitSuccess(false), 6000);
+    }, 900);
+  };
+
   const handleCopyPhone = (text: string) => {
     navigator.clipboard.writeText(text);
     setIsCopied(true);
@@ -909,124 +948,308 @@ export default function Home() {
         </section>
 
         {/* 6. 회사소개 & 문의하기 (서광계기) */}
-        <section id="contact" className="py-16 md:py-24 bg-white/70">
+        <section id="contact" className="py-16 md:py-24 bg-white/70 relative">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              <div>
-                <span className="text-xs font-bold text-blue-600 uppercase tracking-wider">
-                  Contact & Technical Service
-                </span>
-                <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mt-2 mb-4 break-keep">
-                  공장 자동화 및 정밀 계측 솔루션<br />
-                  <span className="text-blue-600">(주)서광계기</span>에 문의하세요
-                </h2>
-                <p className="text-slate-600 text-sm sm:text-base leading-relaxed mb-6 break-keep">
-                  서광계기는 지멘스(Siemens), 서진인스텍(Seojin Instech), 노켄(Nohken), 간사이(Kansai) 등 
-                  세계적인 계측 장비의 공급과 현장 기술 지원을 30여 년간 담당해 온 신뢰의 계측기 전문 기업입니다.
-                </p>
+            <div className="text-center max-w-3xl mx-auto mb-14">
+              <span className="inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider text-blue-700 bg-blue-100/70 mb-3">
+                Contact & Technical Service
+              </span>
+              <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight break-keep">
+                공장 자동화 및 정밀 계측 솔루션<br />
+                <span className="text-blue-600">(주)서광계기</span>에 문의하세요
+              </h2>
+              <p className="text-slate-600 text-sm sm:text-base mt-3 break-keep">
+                지멘스 80GHz 스마트 레이더부터 산업용 센서 견적, 기술 자료, 출장 셋업까지 전문가가 친절히 상담해 드립니다.
+              </p>
+            </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
-                  <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-xs">
-                    <p className="text-xs text-slate-500 font-semibold mb-1">대표 유선전화</p>
-                    <a href="tel:02-6396-4671" className="text-base font-bold text-slate-900 hover:text-blue-600 transition-colors">
-                      02-6396-4671
-                    </a>
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+              {/* 좌측: 고객센터 안내 및 회사 정보 (5 cols) */}
+              <div className="lg:col-span-5 space-y-6">
+                <div className="bg-white p-6 sm:p-7 rounded-2xl border border-slate-200/90 shadow-xs">
+                  <h3 className="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
+                    <span className="w-2 h-5 bg-blue-600 rounded-full" />
+                    빠른 전화 & 이메일 상담
+                  </h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 mb-5">
+                    <div className="bg-slate-50 p-3.5 rounded-xl border border-slate-100">
+                      <p className="text-[11px] text-slate-500 font-semibold mb-0.5">대표 유선전화</p>
+                      <a href="tel:02-6396-4671" className="text-sm font-bold text-slate-900 hover:text-blue-600 transition-colors">
+                        02-6396-4671
+                      </a>
+                    </div>
+                    <div className="bg-slate-50 p-3.5 rounded-xl border border-slate-100">
+                      <p className="text-[11px] text-slate-500 font-semibold mb-0.5">담당자 직통 모바일</p>
+                      <a href="tel:010-6314-4671" className="text-sm font-bold text-slate-900 hover:text-blue-600 transition-colors">
+                        010-6314-4671
+                      </a>
+                    </div>
+                    <div className="bg-slate-50 p-3.5 rounded-xl border border-slate-100">
+                      <p className="text-[11px] text-slate-500 font-semibold mb-0.5">견적 문의 이메일</p>
+                      <a href="mailto:hjy@skgk.co.kr" className="text-xs font-bold text-blue-600 hover:underline">
+                        hjy@skgk.co.kr
+                      </a>
+                    </div>
+                    <div className="bg-slate-50 p-3.5 rounded-xl border border-slate-100">
+                      <p className="text-[11px] text-slate-500 font-semibold mb-0.5">팩스 번호</p>
+                      <p className="text-xs font-bold text-slate-900">
+                        02-6397-4671
+                      </p>
+                    </div>
                   </div>
-                  <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-xs">
-                    <p className="text-xs text-slate-500 font-semibold mb-1">담당자 직통 모바일</p>
-                    <a href="tel:010-6314-4671" className="text-base font-bold text-slate-900 hover:text-blue-600 transition-colors">
-                      010-6314-4671
+
+                  <div className="flex flex-wrap gap-2 pt-2 border-t border-slate-100">
+                    <button
+                      type="button"
+                      onClick={() => handleCopyPhone("02-6396-4671")}
+                      className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-blue-50 text-blue-700 hover:bg-blue-100 font-bold text-xs transition-colors"
+                    >
+                      <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                      </svg>
+                      <span>{isCopied ? "복사완료!" : "대표번호 복사"}</span>
+                    </button>
+                    <a
+                      href={SION_SMARTSTORE_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-emerald-50 text-emerald-700 hover:bg-emerald-100 font-bold text-xs transition-colors"
+                    >
+                      <span className="w-3.5 h-3.5 rounded bg-emerald-600 text-white flex items-center justify-center text-[9px] font-black">N</span>
+                      <span>스마트스토어</span>
                     </a>
-                  </div>
-                  <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-xs">
-                    <p className="text-xs text-slate-500 font-semibold mb-1">견적 문의 이메일</p>
-                    <a href="mailto:hjy@skgk.co.kr" className="text-sm font-bold text-blue-600 hover:underline">
-                      hjy@skgk.co.kr
-                    </a>
-                  </div>
-                  <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-xs">
-                    <p className="text-xs text-slate-500 font-semibold mb-1">팩스 번호</p>
-                    <p className="text-sm font-bold text-slate-900">
-                      02-6397-4671
-                    </p>
                   </div>
                 </div>
 
-                <div className="flex flex-wrap gap-3">
-                  <button
-                    type="button"
-                    onClick={() => handleCopyPhone("02-6396-4671")}
-                    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-blue-600 text-white font-bold text-xs hover:bg-blue-700 transition-colors shadow-sm"
-                  >
-                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                    </svg>
-                    <span>{isCopied ? "전화번호 복사완료!" : "대표전화 번호 복사"}</span>
-                  </button>
-
-                  <a
-                    href={SION_SMARTSTORE_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-emerald-600 text-white font-bold text-xs hover:bg-emerald-700 transition-colors shadow-sm"
-                  >
-                    <span className="w-3.5 h-3.5 rounded bg-white text-emerald-600 flex items-center justify-center text-[9px] font-black">N</span>
-                    <span>시온유통 스마트스토어</span>
-                  </a>
-
-                  <a
-                    href="https://blog.naver.com/skgk-2023"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-slate-900 text-white font-bold text-xs hover:bg-slate-800 transition-colors shadow-sm"
-                  >
-                    <span>네이버 블로그</span>
-                  </a>
-
-                  <a
-                    href="https://skgk-ins.tistory.com/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-amber-600 text-white font-bold text-xs hover:bg-amber-700 transition-colors shadow-sm"
-                  >
-                    <span>티스토리</span>
-                  </a>
+                {/* 본사 위치 및 약도 */}
+                <div className="bg-white p-6 sm:p-7 rounded-2xl border border-slate-200/90 shadow-xs">
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center gap-2">
+                      <div className="w-7 h-7 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
+                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                        </svg>
+                      </div>
+                      <h4 className="text-sm font-bold text-slate-900">본사 및 기술지원 센터</h4>
+                    </div>
+                    <span className="text-[11px] text-slate-500 font-medium">부천 옥길동</span>
+                  </div>
+                  <div className="rounded-xl overflow-hidden border border-slate-200 aspect-16/9 mb-3 bg-slate-100">
+                    <iframe 
+                      src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12666.79938772431!2d126.8253428!3d37.4678082!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x199e29f8acb0a471!2z7Jqw7ISx7YWM7YGs64W47YyM7YGsMQ!5e0!3m2!1sko!2skr!4v1670111873435!5m2!1sko!2skr" 
+                      width="100%" 
+                      height="100%" 
+                      style={{ border: 0 }} 
+                      allowFullScreen 
+                      loading="lazy" 
+                      referrerPolicy="no-referrer-when-downgrade"
+                    />
+                  </div>
+                  <p className="text-xs text-slate-600 leading-relaxed">
+                    <span className="font-semibold text-slate-800">주소:</span> 경기도 부천시 소사구 옥길동 794-1 우성테크노파크1차 507호
+                  </p>
                 </div>
               </div>
 
-              <div className="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-md">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
-                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
-                  </div>
-                  <div>
-                    <h3 className="text-base font-bold text-slate-900">본사 및 기술 연구소 주소</h3>
-                    <p className="text-xs text-slate-500">부천 옥길 우성테크노파크1차</p>
+              {/* 우측: 온라인 문의사항 작성 폼 및 '문의사항 보내기' 버튼 (7 cols) */}
+              <div id="contact-form" className="lg:col-span-7">
+                <div className="bg-white rounded-2xl p-6 sm:p-9 border border-slate-200 shadow-xl relative overflow-hidden">
+                  <div className="absolute top-0 right-0 w-36 h-36 bg-gradient-to-bl from-blue-100 via-indigo-50 to-transparent rounded-bl-full pointer-events-none -z-0" />
+
+                  <div className="relative z-10">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="px-2.5 py-1 rounded text-xs font-bold bg-blue-50 text-blue-700 border border-blue-200/60">
+                        온라인 간편 접수
+                      </span>
+                      <span className="text-xs text-slate-400 font-medium">
+                        * 필수 입력 항목
+                      </span>
+                    </div>
+
+                    <h3 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight mb-2">
+                      견적 및 기술 문의하기
+                    </h3>
+                    <p className="text-xs sm:text-sm text-slate-500 mb-6 break-keep">
+                      문의사항을 남겨주시면 담당 엔지니어가 신속하게 확인 후 전화 또는 이메일로 회신드립니다.
+                    </p>
+
+                    {submitSuccess && (
+                      <div className="mb-6 p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs flex items-center gap-3 animate-in fade-in duration-300">
+                        <div className="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center shrink-0">
+                          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                          </svg>
+                        </div>
+                        <div>
+                          <p className="font-bold text-sm">문의사항이 성공적으로 접수되었습니다!</p>
+                          <p className="text-[11px] text-emerald-700 mt-0.5">서광계기 기술영업팀에서 기재해주신 연락처로 신속히 안내드리겠습니다.</p>
+                        </div>
+                      </div>
+                    )}
+
+                    <form onSubmit={handleSubmitInquiry} className="space-y-4">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                          <label htmlFor="inquiry-name" className="block text-xs font-bold text-slate-700 mb-1.5">
+                            성함 / 담당자명 <span className="text-red-500">*</span>
+                          </label>
+                          <input
+                            type="text"
+                            id="inquiry-name"
+                            name="name"
+                            value={inquiryData.name}
+                            onChange={handleInputChange}
+                            required
+                            placeholder="예: 홍길동 팀장"
+                            className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all bg-slate-50/50 focus:bg-white"
+                          />
+                        </div>
+
+                        <div>
+                          <label htmlFor="inquiry-phone" className="block text-xs font-bold text-slate-700 mb-1.5">
+                            연락처 (휴대전화) <span className="text-red-500">*</span>
+                          </label>
+                          <input
+                            type="tel"
+                            id="inquiry-phone"
+                            name="phone"
+                            value={inquiryData.phone}
+                            onChange={handleInputChange}
+                            required
+                            placeholder="010-0000-0000"
+                            className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all bg-slate-50/50 focus:bg-white"
+                          />
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                          <label htmlFor="inquiry-company" className="block text-xs font-bold text-slate-700 mb-1.5">
+                            회사명 / 상호
+                          </label>
+                          <input
+                            type="text"
+                            id="inquiry-company"
+                            name="company"
+                            value={inquiryData.company}
+                            onChange={handleInputChange}
+                            placeholder="예: (주)한국플랜트"
+                            className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all bg-slate-50/50 focus:bg-white"
+                          />
+                        </div>
+
+                        <div>
+                          <label htmlFor="inquiry-email" className="block text-xs font-bold text-slate-700 mb-1.5">
+                            이메일 주소
+                          </label>
+                          <input
+                            type="email"
+                            id="inquiry-email"
+                            name="email"
+                            value={inquiryData.email}
+                            onChange={handleInputChange}
+                            placeholder="contact@company.com"
+                            className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all bg-slate-50/50 focus:bg-white"
+                          />
+                        </div>
+                      </div>
+
+                      <div>
+                        <label htmlFor="inquiry-product" className="block text-xs font-bold text-slate-700 mb-1.5">
+                          관심 제품 및 문의 유형
+                        </label>
+                        <select
+                          id="inquiry-product"
+                          name="productInterest"
+                          value={inquiryData.productInterest}
+                          onChange={handleInputChange}
+                          className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all bg-slate-50/50 focus:bg-white text-slate-800"
+                        >
+                          <option value="SITRANS LR150 (80GHz 콤팩트 레이더)">지멘스 SITRANS LR150 (80GHz 콤팩트 레이더)</option>
+                          <option value="SITRANS LR120 (장거리 방수 레이더)">지멘스 SITRANS LR120 (30m 장거리 방수 레이더)</option>
+                          <option value="SITRANS LR250 (플랜지 혼 프로세스 레이더)">지멘스 SITRANS LR250 (고온고압 플랜지 레이더)</option>
+                          <option value="시온유통 스마트스토어 제품 구매">시온유통 스마트스토어 제품군 (압력·온도·유량 센서)</option>
+                          <option value="현장 기술지원 및 무선 세팅 컨설팅">현장 기술지원 및 블루투스 세팅 컨설팅</option>
+                          <option value="기타 맞춤 계측기 견적 요청">기타 맞춤 계측기 견적 요청</option>
+                        </select>
+                      </div>
+
+                      <div>
+                        <label htmlFor="inquiry-message" className="block text-xs font-bold text-slate-700 mb-1.5">
+                          문의 내용 (측정 매질, 탱크 규격, 희망 수량 등)
+                        </label>
+                        <textarea
+                          id="inquiry-message"
+                          name="message"
+                          rows={4}
+                          value={inquiryData.message}
+                          onChange={handleInputChange}
+                          placeholder="측정하실 유체 종류, 측정 거리, 설치 환경 및 필요한 수량이나 납기 등을 자유롭게 적어주세요."
+                          className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all bg-slate-50/50 focus:bg-white resize-none"
+                        />
+                      </div>
+
+                      <div className="pt-2">
+                        {/* 화려하고 세련된 '문의사항 보내기' 메인 버튼 (노란색 테마) */}
+                        <button
+                          type="submit"
+                          disabled={isSubmitting}
+                          className="w-full relative group overflow-hidden rounded-xl bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 hover:from-amber-500 hover:via-yellow-500 hover:to-amber-600 text-slate-950 font-black py-4 px-6 shadow-lg shadow-amber-400/30 hover:shadow-xl hover:shadow-amber-400/50 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed border border-yellow-300/60"
+                        >
+                          {/* 버튼 샤인 효과 */}
+                          <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-white/0 via-white/40 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 pointer-events-none" />
+
+                          {isSubmitting ? (
+                            <div className="flex items-center gap-2 text-slate-950">
+                              <svg className="animate-spin h-5 w-5 text-slate-950" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                              </svg>
+                              <span className="text-sm font-black tracking-wide">문의사항 전송 중...</span>
+                            </div>
+                          ) : (
+                            <div className="flex items-center gap-2 text-slate-950">
+                              <svg className="w-5 h-5 text-slate-950 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                              </svg>
+                              <span className="text-base tracking-tight font-black">문의사항 보내기</span>
+                              <span className="text-xs bg-slate-950/15 text-slate-950 px-2.5 py-0.5 rounded-full ml-1 font-bold group-hover:bg-slate-950/20 transition-colors">
+                                빠른 회신
+                              </span>
+                            </div>
+                          )}
+                        </button>
+                      </div>
+
+                      <p className="text-[11px] text-slate-400 text-center mt-2">
+                        🔒 입력하신 정보는 문의 회신 및 기술 지원 목적으로만 안전하게 사용됩니다.
+                      </p>
+                    </form>
                   </div>
                 </div>
-
-                <div className="rounded-xl overflow-hidden border border-slate-200 aspect-16/10 mb-5 bg-slate-100">
-                  <iframe 
-                    src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12666.79938772431!2d126.8253428!3d37.4678082!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x199e29f8acb0a471!2z7Jqw7ISx7YWM7YGs64W47YyM7YGsMQ!5e0!3m2!1sko!2skr!4v1670111873435!5m2!1sko!2skr" 
-                    width="100%" 
-                    height="100%" 
-                    style={{ border: 0 }} 
-                    allowFullScreen 
-                    loading="lazy" 
-                    referrerPolicy="no-referrer-when-downgrade"
-                  />
-                </div>
-
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  <span className="font-semibold text-slate-800">도로명 주소:</span> 경기도 부천시 소사구 옥길동 794-1 우성테크노파크1차 507호 (우: 14786)
-                </p>
               </div>
             </div>
           </div>
         </section>
+
+        {/* 6.5. 플로팅 퀵 '문의사항 보내기' 버튼 (노란색 테마) */}
+        <div className="fixed bottom-6 right-6 z-40 flex items-center">
+          <a
+            href="#contact-form"
+            className="group flex items-center gap-2.5 px-4 sm:px-5 py-3 rounded-full bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 hover:from-amber-500 hover:via-yellow-500 hover:to-amber-600 text-slate-950 text-xs sm:text-sm font-black shadow-xl shadow-amber-400/35 hover:shadow-2xl hover:scale-105 active:scale-95 transition-all duration-200 border border-yellow-300"
+          >
+            <span className="relative flex h-2.5 w-2.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-600 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-blue-600"></span>
+            </span>
+            <span>문의사항 보내기</span>
+            <div className="w-6 h-6 rounded-full bg-slate-950/15 flex items-center justify-center group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform text-slate-950">
+              <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+              </svg>
+            </div>
+          </a>
+        </div>
 
         {/* 7. 모달: 제품 상세 카탈로그 스펙 */}
         {selectedProduct && (
